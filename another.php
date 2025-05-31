@@ -40,7 +40,7 @@ if ($conn->connect_error) {
 
         <button type="submit" id="submitBtn">Submit</button>
     </form>
-    
+
 </div>
 
 <script>
