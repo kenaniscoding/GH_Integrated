@@ -209,13 +209,13 @@ if ($selected_table === 'slips') {
             <div class="sidebar-header">
                 <h2 class="sidebar-title">
                     <i class="fas fa-database"></i>
-                    Database View
+                    LSGH DATABASE
                 </h2>
-                <p class="sidebar-subtitle">Select a table to view</p>
+                <p class="sidebar-subtitle">Admin Dashboard View</p>
             </div>
             
             <nav class="table-nav">
-                <div class="nav-section-title">Available Tables</div>
+                <div class="nav-section-title">List of Tables</div>
                 <?php foreach ($tables as $table): ?>
                     <a href="?table=<?php echo urlencode($table); ?>" 
                        class="table-nav-item <?php echo ($table === $selected_table) ? 'active' : ''; ?>">
@@ -546,7 +546,7 @@ if ($selected_table === 'slips') {
                     <?php else: ?>
                         <!-- Standard table view for other tables with sorting -->
                     <div class="table-card">
-                        <div class="table-card-header">
+                        <!-- <div class="table-card-header">
                             <h2 class="table-card-title">
                                 <i class="fas fa-table"></i> 
                                 <?php echo htmlspecialchars($selected_table); ?>
@@ -558,7 +558,7 @@ if ($selected_table === 'slips') {
                                 echo "Total records: " . $count;
                                 ?>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="table-card-content">
                             <?php
                             $result = $conn->query("SELECT * FROM `$selected_table`");
