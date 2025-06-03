@@ -142,13 +142,13 @@ if ($selected_table === 'slips') {
             <div class="sidebar-header">
                 <h2 class="sidebar-title">
                     <i class="fas fa-database"></i>
-                    Database View
+                    LSGH DATABASE
                 </h2>
-                <p class="sidebar-subtitle">Select a table to view</p>
+                <p class="sidebar-subtitle">Admin Dashboard View</p>
             </div>
             
             <nav class="table-nav">
-                <div class="nav-section-title">Available Tables</div>
+                <div class="nav-section-title">List of Tables</div>
                 <?php foreach ($tables as $table): ?>
                     <a href="?table=<?php echo urlencode($table); ?>" 
                        class="table-nav-item <?php echo ($table === $selected_table) ? 'active' : ''; ?>">
@@ -284,7 +284,7 @@ if ($selected_table === 'slips') {
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
-                                    
+                                    <!-- TODO FIX THE ACCEPT PENDING AND REJECT -->
                                     <!-- Action Buttons -->
                                     <div class="record-actions">
                                         <h3 class="actions-title">Change Status</h3>
@@ -479,19 +479,6 @@ if ($selected_table === 'slips') {
                     <?php else: ?>
                         <!-- Standard table view for other tables with sorting -->
                     <div class="table-card">
-                        <div class="table-card-header">
-                            <h2 class="table-card-title">
-                                <i class="fas fa-table"></i> 
-                                <?php echo htmlspecialchars($selected_table); ?>
-                            </h2>
-                            <div class="table-stats">
-                                <?php
-                                $count_result = $conn->query("SELECT COUNT(*) as count FROM `$selected_table`");
-                                $count = $count_result->fetch_assoc()['count'];
-                                echo "Total records: " . $count;
-                                ?>
-                            </div>
-                        </div>
                         <div class="table-card-content">
                             <?php
                             $result = $conn->query("SELECT * FROM `$selected_table`");

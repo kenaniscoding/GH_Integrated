@@ -6,7 +6,7 @@
          --error-color: #d93025;
          --border-color: #dadce0;
          --text-color: #202124;
-         --background-color:rgba(236, 236, 236, 0.47);
+         --background-color:rgba(236, 236, 236, 0.5);
       }
 
       * {
@@ -17,7 +17,10 @@
 
       body {
          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-         background-color: var(--background-color);
+         /* background-color: var(--background-color); */
+         background: url('background.jpg') no-repeat center center fixed;
+         background-color: #dadce0;
+         background-size: cover;
          color: var(--text-color);
          display: flex;
          justify-content: center;
