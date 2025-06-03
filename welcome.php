@@ -546,19 +546,6 @@ if ($selected_table === 'slips') {
                     <?php else: ?>
                         <!-- Standard table view for other tables with sorting -->
                     <div class="table-card">
-                        <!-- <div class="table-card-header">
-                            <h2 class="table-card-title">
-                                <i class="fas fa-table"></i> 
-                                <?php echo htmlspecialchars($selected_table); ?>
-                            </h2>
-                            <div class="table-stats">
-                                <?php
-                                $count_result = $conn->query("SELECT COUNT(*) as count FROM `$selected_table`");
-                                $count = $count_result->fetch_assoc()['count'];
-                                echo "Total records: " . $count;
-                                ?>
-                            </div>
-                        </div> -->
                         <div class="table-card-content">
                             <?php
                             $result = $conn->query("SELECT * FROM `$selected_table`");
