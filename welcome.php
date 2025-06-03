@@ -132,91 +132,73 @@ if ($selected_table === 'slips') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/admin_style.css">
     <style>
-        /* Additional styles for sorting and LC selector */
-        .lc-selector {
-            background: white;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .lc-selector-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #374151;
-        }
-        
-        .lc-buttons {
+        .action-buttons {
             display: flex;
+            gap: 5px;
             flex-wrap: wrap;
-            gap: 0.5rem;
         }
         
-        .lc-btn {
-            padding: 0.5rem 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 6px;
-            background: white;
-            color: #374151;
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: all 0.2s;
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.3s ease;
+            min-width: 70px;
+            justify-content: center;
         }
         
-        .lc-btn:hover {
-            border-color: #3b82f6;
-            color: #3b82f6;
-        }
-        
-        .lc-btn.active {
-            background: #3b82f6;
-            border-color: #3b82f6;
+        .action-btn.accept {
+            background-color: #28a745;
             color: white;
         }
         
-        /* Sortable table styles */
-        .sortable-table th {
-            cursor: pointer;
-            position: relative;
-            user-select: none;
+        .action-btn.accept:hover {
+            background-color: #218838;
+            transform: translateY(-1px);
         }
         
-        .sortable-table th:hover {
-            background-color: #f3f4f6;
+        .action-btn.reject {
+            background-color: #dc3545;
+            color: white;
         }
         
-        .sortable-table th.sortable::after {
-            content: '\f0dc';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            right: 8px;
-            opacity: 0.3;
+        .action-btn.reject:hover {
+            background-color: #c82333;
+            transform: translateY(-1px);
         }
         
-        .sortable-table th.sort-asc::after {
-            content: '\f0de';
-            opacity: 1;
-            color: #3b82f6;
+        .status-badge.status-accepted {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
         
-        .sortable-table th.sort-desc::after {
-            content: '\f0dd';
-            opacity: 1;
-            color: #3b82f6;
+        .status-badge.status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
         
-        @media (max-width: 768px) {
-            .lc-buttons {
-                flex-direction: column;
-            }
-            
-            .lc-btn {
-                text-align: center;
-            }
+        .status-badge.status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
     </style>
 </head>
@@ -692,156 +674,65 @@ if ($selected_table === 'slips') {
     </div>
 
     <script>
-        // Mobile menu functionality
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-
-        function toggleSidebar() {
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('show');
-        }
-
-        function closeSidebar() {
-            sidebar.classList.remove('open');
-            overlay.classList.remove('show');
-        }
-
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', toggleSidebar);
-        }
-
-        if (overlay) {
-            overlay.addEventListener('click', closeSidebar);
-        }
-
-        // Close sidebar when clicking on a table link on mobile
-        document.querySelectorAll('.table-nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    closeSidebar();
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize all tables
+            document.querySelectorAll('.sortable-table th').forEach(headerCell => {
+                if (!headerCell.textContent.includes('Action')) {  // Skip the Action column
+                    headerCell.addEventListener('click', () => {
+                        const table = headerCell.closest('table');
+                        const columnIndex = parseInt(headerCell.dataset.column);
+                        const currentIsAscending = headerCell.classList.contains('sort-asc');
+                        
+                        // Remove sort classes from all headers in this table
+                        table.querySelectorAll('th').forEach(th => {
+                            th.classList.remove('sort-asc', 'sort-desc');
+                        });
+                        
+                        // Add appropriate sort class
+                        if (currentIsAscending) {
+                            headerCell.classList.add('sort-desc');
+                        } else {
+                            headerCell.classList.add('sort-asc');
+                        }
+                        
+                        // Sort the table
+                        sortTableByColumn(table, columnIndex, !currentIsAscending);
+                    });
                 }
             });
         });
 
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                closeSidebar();
-            }
-        });
-
-        // Table sorting functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const tables = document.querySelectorAll('.sortable-table');
-            
-            tables.forEach(table => {
-                const headers = table.querySelectorAll('th.sortable');
-                const tbody = table.querySelector('tbody');
-                
-                headers.forEach((header, index) => {
-                    header.addEventListener('click', () => {
-                        sortTable(table, index, header);
-                    });
-                });
-            });
-        });
-
-        function sortTable(table, columnIndex, header) {
+        function sortTableByColumn(table, columnIndex, ascending = true) {
             const tbody = table.querySelector('tbody');
             const rows = Array.from(tbody.querySelectorAll('tr'));
             
-            // Determine sort direction
-            const currentSort = header.classList.contains('sort-asc') ? 'asc' : 
-                              header.classList.contains('sort-desc') ? 'desc' : '';
-            const newSort = currentSort === 'asc' ? 'desc' : 'asc';
-            
-            // Clear all sort classes
-            table.querySelectorAll('th').forEach(th => {
-                th.classList.remove('sort-asc', 'sort-desc');
-            });
-            
-            // Add new sort class
-            header.classList.add(newSort === 'asc' ? 'sort-asc' : 'sort-desc');
-            
-            // Sort rows
-            rows.sort((a, b) => {
-                const aVal = getCellValue(a, columnIndex);
-                const bVal = getCellValue(b, columnIndex);
+            // Sort rows based on cell content in the specified column
+            const sortedRows = rows.sort((rowA, rowB) => {
+                let cellA = rowA.querySelectorAll('td')[columnIndex].textContent.trim();
+                let cellB = rowB.querySelectorAll('td')[columnIndex].textContent.trim();
                 
-                // Handle different data types
-                const aNum = parseFloat(aVal);
-                const bNum = parseFloat(bVal);
+                // Check if the values are numbers
+                const numA = parseFloat(cellA);
+                const numB = parseFloat(cellB);
                 
-                let comparison = 0;
-                
-                if (!isNaN(aNum) && !isNaN(bNum)) {
-                    // Numeric comparison
-                    comparison = aNum - bNum;
-                } else if (isValidDate(aVal) && isValidDate(bVal)) {
-                    // Date comparison
-                    comparison = new Date(aVal) - new Date(bVal);
+                if (!isNaN(numA) && !isNaN(numB)) {
+                    return ascending ? numA - numB : numB - numA;
                 } else {
-                    // String comparison
-                    comparison = aVal.toLowerCase().localeCompare(bVal.toLowerCase());
+                    // For text comparison, use localeCompare for proper string comparison
+                    return ascending 
+                        ? cellA.localeCompare(cellB) 
+                        : cellB.localeCompare(cellA);
                 }
-                
-                return newSort === 'asc' ? comparison : -comparison;
             });
             
-            // Reorder rows in table
-            rows.forEach(row => tbody.appendChild(row));
-        }
-
-        function getCellValue(row, columnIndex) {
-            const cell = row.cells[columnIndex];
-            if (!cell) return '';
-            
-            // Extract text content, ignoring HTML tags
-            let text = cell.textContent || cell.innerText || '';
-            
-            // Handle status badges - extract just the status text
-            const statusBadge = cell.querySelector('.status-badge');
-            if (statusBadge) {
-                text = statusBadge.textContent.replace(/^\s*\S+\s+/, ''); // Remove icon
+            // Remove existing rows
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
             }
             
-            return text.trim();
+            // Add sorted rows back to the table
+            sortedRows.forEach(row => tbody.appendChild(row));
         }
-
-        function isValidDate(dateString) {
-            const date = new Date(dateString);
-            return !isNaN(date.getTime()) && dateString.match(/\d{4}-\d{2}-\d{2}|\d{2}\/\d{2}\/\d{4}|\d{2}-\d{2}-\d{4}/);
-        }
-
-        // Add keyboard navigation for record browsing
-        document.addEventListener('keydown', function(e) {
-            // Only work when not in an input field
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
-                return;
-            }
-            
-            const urlParams = new URLSearchParams(window.location.search);
-            const table = urlParams.get('table');
-            
-            if (table === 'makeup_slips' || table === 'slips') {
-                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                    // Previous record
-                    const prevBtn = document.querySelector('.nav-btn:not(.disabled)');
-                    if (prevBtn && prevBtn.textContent.includes('Previous')) {
-                        e.preventDefault();
-                        window.location.href = prevBtn.href;
-                    }
-                } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-                    // Next record
-                    const nextBtn = document.querySelector('.nav-btn:not(.disabled)');
-                    if (nextBtn && nextBtn.textContent.includes('Next')) {
-                        e.preventDefault();
-                        window.location.href = nextBtn.href;
-                    }
-                }
-            }
-        });
     </script>
 </body>
 </html>

@@ -677,3 +677,90 @@
                 min-width: auto;
             }
         }
+
+        /* Additional styles for sorting and LC selector */
+        .lc-selector {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .lc-selector-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+        
+        .lc-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .lc-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            background: white;
+            color: #374151;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .lc-btn:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .lc-btn.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+        
+        /* Sortable table styles */
+        .sortable-table th {
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+        }
+        
+        .sortable-table th:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .sortable-table th.sortable::after {
+            content: '\f0dc';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 8px;
+            opacity: 0.3;
+        }
+        
+        .sortable-table th.sort-asc::after {
+            content: '\f0de';
+            opacity: 1;
+            color: #3b82f6;
+        }
+        
+        .sortable-table th.sort-desc::after {
+            content: '\f0dd';
+            opacity: 1;
+            color: #3b82f6;
+        }
+        
+        @media (max-width: 768px) {
+            .lc-buttons {
+                flex-direction: column;
+            }
+            
+            .lc-btn {
+                text-align: center;
+            }
+        }
