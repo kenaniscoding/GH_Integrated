@@ -9,7 +9,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-// DELETE IF IT DOESN"T WORK
+//////////////////////////START DELETE///////////////////////////////////////
 function sendStatusUpdateEmail($email, $student_name, $parent_name, $slip_id, $new_status, $reason = '') {
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "From: kenanbanal3@gmail.com\r\n";
@@ -227,6 +227,7 @@ if (isset($_GET['updated']) && $_GET['updated'] == '1') {
 if (isset($error_message)) {
     echo "<div class='error-message'>$error_message</div>";
 }
+//////////////////////////END DELETE///////////////////////////////////////
 
 // Handle status updates for different tables
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_id']) && isset($_POST['new_status']) && isset($_POST['table_name'])) {
@@ -417,6 +418,251 @@ if ($selected_table === 'slips') {
             display: inline-flex;
             align-items: center;
             gap: 4px;
+        }
+
+        /* Success Message Styles */
+        .success-message {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border: 2px solid #c3e6cb;
+            border-left: 6px solid #28a745;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.15);
+            position: relative;
+            overflow: hidden;
+            animation: slideInFromTop 0.5s ease-out;
+        }
+
+        .success-message::before {
+            content: "✓";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: #28a745;
+            background: rgba(255, 255, 255, 0.8);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-message {
+            padding-left: 70px; /* Make room for the checkmark */
+        }
+
+        /* Error Message Styles */
+        .error-message {
+            background: linear-gradient(135deg, #f8d7da 0%, #f1aeb5 100%);
+            color: #721c24;
+            border: 2px solid #f1aeb5;
+            border-left: 6px solid #dc3545;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
+            position: relative;
+            overflow: hidden;
+            animation: slideInFromTop 0.5s ease-out;
+        }
+
+        .error-message::before {
+            content: "✕";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            font-weight: bold;
+            color: #dc3545;
+            background: rgba(255, 255, 255, 0.8);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-message {
+            padding-left: 70px; /* Make room for the X mark */
+        }
+
+        /* Warning/Info Message Styles (bonus) */
+        .warning-message {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+            border: 2px solid #ffeaa7;
+            border-left: 6px solid #ffc107;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.15);
+            position: relative;
+            overflow: hidden;
+            animation: slideInFromTop 0.5s ease-out;
+            padding-left: 70px;
+        }
+
+        .warning-message::before {
+            content: "⚠";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffc107;
+            background: rgba(255, 255, 255, 0.8);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .info-message {
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+            border-left: 6px solid #17a2b8;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+            box-shadow: 0 4px 12px rgba(23, 162, 184, 0.15);
+            position: relative;
+            overflow: hidden;
+            animation: slideInFromTop 0.5s ease-out;
+            padding-left: 70px;
+        }
+
+        .info-message::before {
+            content: "ℹ";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            font-weight: bold;
+            color: #17a2b8;
+            background: rgba(255, 255, 255, 0.8);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Animation for messages */
+        @keyframes slideInFromTop {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hover effects for interactive feel */
+        .success-message:hover,
+        .error-message:hover,
+        .warning-message:hover,
+        .info-message:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .success-message,
+            .error-message,
+            .warning-message,
+            .info-message {
+                padding: 12px 16px;
+                padding-left: 60px;
+                font-size: 14px;
+                margin: 15px 0;
+            }
+            
+            .success-message::before,
+            .error-message::before,
+            .warning-message::before,
+            .info-message::before {
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
+                left: 16px;
+            }
+        }
+
+        /* Close button for dismissible messages (optional) */
+        .message-close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            color: inherit;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .message-close:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Auto-hide animation (optional) */
+        .message-auto-hide {
+            animation: slideInFromTop 0.5s ease-out, fadeOut 0.5s ease-in 4.5s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
         }
     </style>
 </head>
