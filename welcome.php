@@ -351,7 +351,7 @@ if ($selected_table === 'slips') {
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
-                                    
+                                    <!-- TODO FIX THE ACCEPT PENDING AND REJECT -->
                                     <!-- Action Buttons -->
                                     <div class="record-actions">
                                         <h3 class="actions-title">Change Status</h3>
