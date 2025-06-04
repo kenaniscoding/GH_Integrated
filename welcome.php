@@ -831,7 +831,7 @@ if ($selected_table === 'slips') {
                                                     <i class="fas fa-check"></i> Accept
                                                 </button>
                                             </form>
-                                            
+
                                             <form method="POST" style="display: inline;">
                                                 <input type="hidden" name="update_id" value="<?php echo intval($current_record['id']); ?>">
                                                 <input type="hidden" name="table_name" value="makeup_slips">
