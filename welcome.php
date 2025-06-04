@@ -908,39 +908,6 @@ if ($selected_table === 'slips') {
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay" class="loading-overlay">
-        <div class="loading-container">
-            <!-- Email Icon -->
-            <div class="email-icon">📧</div>
-            
-            <!-- Loading Title -->
-            <div class="loading-title">Sending Email</div>
-            <div class="loading-subtitle">Please wait<span class="dots"></span></div>
-            
-            <!-- Spinner -->
-            <div class="spinner"></div>
-            
-            <!-- Progress Steps -->
-            <div class="progress-steps">
-                <div class="progress-step" id="step1">
-                    <span>Updating status...</span>
-                </div>
-                <div class="progress-step" id="step2">
-                    <span>Preparing email...</span>
-                </div>
-                <div class="progress-step" id="step3">
-                    <span>Sending notification...</span>
-                </div>
-                <div class="progress-step" id="step4">
-                    <span>Confirming delivery...</span>
-                </div>
-            </div>
-            
-            <!-- Success Checkmark (initially hidden) -->
-            <div id="successCheckmark" class="success-checkmark"></div>
-        </div>
-    </div>
     <div class="dashboard">
         <!-- Sidebar Navigation -->
         <aside class="sidebar" id="sidebar">
@@ -1105,36 +1072,35 @@ if ($selected_table === 'slips') {
                                         <div class="action-buttons-large">
                                             <?php $current_status = strtolower($current_record['status']); ?>
                                             
-                                            <form method="POST" style="display: inline;" onsubmit="showLoading(this, 'accepted')">
+                                            <form method="POST" style="display: inline;">
                                                 <input type="hidden" name="update_id" value="<?php echo intval($current_record['id']); ?>">
                                                 <input type="hidden" name="table_name" value="makeup_slips">
                                                 <input type="hidden" name="new_status" value="accepted">
-                                                <button type="submit" class="action-btn-large accept <?php echo ($current_status == 'accepted' ? 'active' : ''); ?>"
+                                                <button type="submit" class="action-btn-large accept "
                                                         <?php echo ($current_status == 'accepted' ? 'disabled' : ''); ?>>
                                                     <i class="fas fa-check"></i> Accept
                                                 </button>
                                             </form>
 
-                                            <form method="POST" style="display: inline;" onsubmit="showLoading(this, 'pending')">
+                                            <form method="POST" style="display: inline;">
                                                 <input type="hidden" name="update_id" value="<?php echo intval($current_record['id']); ?>">
                                                 <input type="hidden" name="table_name" value="makeup_slips">
                                                 <input type="hidden" name="new_status" value="pending">
-                                                <button type="submit" class="action-btn-large pending <?php echo ($current_status == 'pending' ? 'active' : ''); ?>"
+                                                <button type="submit" class="action-btn-large pending "
                                                         <?php echo ($current_status == 'pending' ? 'disabled' : ''); ?>>
                                                     <i class="fas fa-clock"></i> Pending
                                                 </button>
                                             </form>
                                             
-                                            <form method="POST" style="display: inline;" onsubmit="showLoading(this, 'rejected')">
+                                            <form method="POST" style="display: inline;">
                                                 <input type="hidden" name="update_id" value="<?php echo intval($current_record['id']); ?>">
                                                 <input type="hidden" name="table_name" value="makeup_slips">
                                                 <input type="hidden" name="new_status" value="rejected">
-                                                <button type="submit" class="action-btn-large reject <?php echo ($current_status == 'rejected' ? 'active' : ''); ?>"
+                                                <button type="submit" class="action-btn-large reject "
                                                         <?php echo ($current_status == 'rejected' ? 'disabled' : ''); ?>>
                                                     <i class="fas fa-times"></i> Reject
                                                 </button>
                                             </form>
-                                            
                                             
                                         </div>
                                     </div>
@@ -1247,31 +1213,31 @@ if ($selected_table === 'slips') {
                                             <div class="action-buttons-large">
                                                 <?php $current_status = strtolower($current_slip_record['status']); ?>
                                                 
-                                                <form method="POST" style="display: inline;" onsubmit="showLoading(this, 'accepted')">
+                                                <form method="POST" style="display: inline;">
                                                     <input type="hidden" name="update_id" value="<?php echo intval($current_slip_record['id']); ?>">
                                                     <input type="hidden" name="table_name" value="slips">
                                                     <input type="hidden" name="new_status" value="accepted">
-                                                    <button type="submit" class="action-btn-large accept <?php echo ($current_status == 'accepted' ? 'active' : ''); ?>"
+                                                    <button type="submit" class="action-btn-large accept "
                                                             <?php echo ($current_status == 'accepted' ? 'disabled' : ''); ?>>
                                                         <i class="fas fa-check"></i> Accept
                                                     </button>
                                                 </form>
                                                 
-                                                <form method="POST" style="display: inline;" onsubmit="showLoading(this, 'pending')">
+                                                <form method="POST" style="display: inline;">
                                                     <input type="hidden" name="update_id" value="<?php echo intval($current_slip_record['id']); ?>">
                                                     <input type="hidden" name="table_name" value="slips">
                                                     <input type="hidden" name="new_status" value="pending">
-                                                    <button type="submit" class="action-btn-large pending <?php echo ($current_status == 'pending' ? 'active' : ''); ?>"
+                                                    <button type="submit" class="action-btn-large pending "
                                                             <?php echo ($current_status == 'pending' ? 'disabled' : ''); ?>>
                                                         <i class="fas fa-clock"></i> Pending
                                                     </button>
                                                 </form>
                                                 
-                                                <form method="POST" style="display: inline;" onsubmit="showLoading(this, 'rejected')">
+                                                <form method="POST" style="display: inline;">
                                                     <input type="hidden" name="update_id" value="<?php echo intval($current_slip_record['id']); ?>">
                                                     <input type="hidden" name="table_name" value="slips">
                                                     <input type="hidden" name="new_status" value="rejected">
-                                                    <button type="submit" class="action-btn-large reject <?php echo ($current_status == 'rejected' ? 'active' : ''); ?>"
+                                                    <button type="submit" class="action-btn-large reject "
                                                             <?php echo ($current_status == 'rejected' ? 'disabled' : ''); ?>>
                                                         <i class="fas fa-times"></i> Reject
                                                     </button>
@@ -1412,93 +1378,6 @@ if ($selected_table === 'slips') {
     </div>
 
     <script>
-let currentStep = 0;
-        const steps = ['step1', 'step2', 'step3', 'step4'];
-
-        function showLoading(form, status) {
-            // Show loading overlay
-            document.getElementById('loadingOverlay').classList.add('show');
-            
-            // Add loading class to button
-            const button = form.querySelector('button');
-            button.classList.add('loading');
-            
-            // Simulate progress steps
-            simulateProgress();
-            
-            // Prevent form submission temporarily for demo
-            // Remove this return false in production
-            // return false;
-        }
-
-        function simulateProgress() {
-            currentStep = 0;
-            
-            const interval = setInterval(() => {
-                if (currentStep > 0) {
-                    document.getElementById(steps[currentStep - 1]).classList.remove('active');
-                    document.getElementById(steps[currentStep - 1]).classList.add('completed');
-                }
-                
-                if (currentStep < steps.length) {
-                    document.getElementById(steps[currentStep]).classList.add('active');
-                    currentStep++;
-                } else {
-                    clearInterval(interval);
-                    showSuccess();
-                }
-            }, 800);
-        }
-
-        function showSuccess() {
-            // Hide spinner
-            document.querySelector('.spinner').style.display = 'none';
-            document.querySelector('.loading-title').textContent = 'Email Sent Successfully!';
-            document.querySelector('.loading-subtitle').textContent = 'Status updated and notification sent.';
-            
-            // Show success checkmark
-            document.getElementById('successCheckmark').classList.add('show');
-            
-            // Mark last step as completed
-            document.getElementById(steps[steps.length - 1]).classList.remove('active');
-            document.getElementById(steps[steps.length - 1]).classList.add('completed');
-            
-            // Hide loading after 2 seconds
-            setTimeout(() => {
-                hideLoading();
-            }, 2000);
-        }
-
-        function hideLoading() {
-            document.getElementById('loadingOverlay').classList.remove('show');
-            
-            // Reset loading state
-            document.querySelectorAll('.action-btn-large').forEach(btn => {
-                btn.classList.remove('loading');
-            });
-            
-            // Reset progress steps
-            document.querySelectorAll('.progress-step').forEach(step => {
-                step.classList.remove('active', 'completed');
-            });
-            
-            // Reset UI elements
-            document.querySelector('.spinner').style.display = 'block';
-            document.querySelector('.loading-title').textContent = 'Sending Email';
-            document.querySelector('.loading-subtitle').textContent = 'Please wait';
-            document.getElementById('successCheckmark').classList.remove('show');
-            
-            currentStep = 0;
-        }
-
-        // Handle form submission errors (optional)
-        window.addEventListener('beforeunload', function() {
-            // Hide loading if page is being refreshed/closed
-            hideLoading();
-        });
-
-
-
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize all tables
             document.querySelectorAll('.sortable-table th').forEach(headerCell => {
