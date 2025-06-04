@@ -19,7 +19,7 @@ function sendStatusUpdateEmail($email, $student_name, $parent_name, $slip_id, $n
     // Customize subject and message based on status
     switch (strtolower($new_status)) {
         case 'accepted':
-            $subject = "Absence Slip Approved - " . $student_name;
+            $subject = "[LSGH] Absence Slip Approved - " . $student_name;
             $message = "
                 <html>
                 <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
@@ -58,7 +58,7 @@ function sendStatusUpdateEmail($email, $student_name, $parent_name, $slip_id, $n
             break;
             
         case 'rejected':
-            $subject = "Absence Slip Requires Attention - " . $student_name;
+            $subject = "[LSGH] Absence Slip Requires Attention - " . $student_name;
             $message = "
                 <html>
                 <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
@@ -104,7 +104,7 @@ function sendStatusUpdateEmail($email, $student_name, $parent_name, $slip_id, $n
             break;
             
         case 'pending':
-            $subject = "Absence Slip Under Review - " . $student_name;
+            $subject = "[LSGH] Absence Slip Under Review - " . $student_name;
             $message = "
                 <html>
                 <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>

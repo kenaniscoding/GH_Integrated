@@ -162,8 +162,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if ($conn->query($sql) === TRUE) {
         // Send confirmation email to student/parent
-        $userSubject = "Absence Slip Submission Confirmation";
-        $message = "Dear $parent_first_name $parent_last_name,\n\nThank you for your submission. This is a confirmation that we have received your absence slip request for $student_first_name $student_last_name from $start_date to $end_date.\n\nReason: $reason\n\n";
+        $userSubject = "[LSGH] Absence Slip Submission Confirmation";
+        // Dear $parent_first_name $parent_last_name,
+        // \n\nThank you for your submission. This is a confirmation that we have received your absence slip request for
+        //  $student_first_name $student_last_name from $start_date to $end_date.\n\nReason: $reason\n\n
+        $message = "
+        <html>
+                <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
+                    <div style='max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd;'>
+                        <h2 style='color: #28a745; text-align: center;'>Absence Slip Approved ✓</h2>
+                        
+                        <p>Dear $parent_last_name, $parent_first_name,</p>
+                        
+                        <p>We are pleased to inform you that the absence slip for <strong>$student_first_name</strong>, <strong>$student_last_name</strong> has been submitted.</p>
+                        
+                        <div style='background: #f8f9fa; padding: 15px; border-left: 4px solid #28a745; margin: 20px 0;'>
+                            <h3 style='margin-top: 0;'>Slip Details:</h3>
+                            <p><strong>First Name:</strong> $student_first_name</p>
+                            <p><strong>Last Name:</strong> $student_last_name</p>
+                            <p><strong>Grade Level:</strong> $grade_level</p>
+                            <p><strong>Section:</strong> $section</p>
+                            <p><strong>Absence Date:</strong> $start_date to $end_date</p>
+                            <p><strong>Reason:</strong> $reason</p>
+                            <p><strong>Date Processed:</strong> " . date('F j, Y \a\t g:i A') . "</p>
+                        </div>
+                        
+                        <p>Your child's absence has been officially recorded and approved. Please ensure that any missed assignments or quizzes are coordinated with the respective teachers.</p>
+                        
+                        <p>If you have any questions, please don't hesitate to contact us.</p>
+                        
+                        <p>Best regards,<br>
+                        <strong>Academic Office</strong><br>
+                        La Salle Green Hills</p>
+                        
+                        <hr style='margin: 30px 0;'>
+                        <p style='font-size: 12px; color: #666; text-align: center;'>
+                            This is an automated message. Please do not reply to this email.<br>
+                            For feedback: edtech@lsgh.edu.ph
+                        </p>
+                    </div>
+                </body>
+                </html> 
+         ";
         
         // Add medical certificate info to email if uploaded
         if (!empty($medical_cert_filename)) {
@@ -173,6 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message .= "We will contact you if further information is needed.\n\nBest regards,\nAcademic Office";
         
         $headers = "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
         $headers .= "From: kenanbanal3@gmail.com\r\n";
         $headers .= "Reply-To: kenanbanal3@gmail.com\r\n";
         
@@ -191,17 +232,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $teacherEmail = $teacherRow['email'];
             $teacherName = $teacherRow['name'];
             
-            $teacherSubject = "Absence Slip Request Notification";
-            $teacherBody = "Dear $teacherName,\n\nA $grade_level student at section $section who goes by $student_first_name $student_last_name was absent from $start_date to $end_date due to $reason.\n\n";
-            
+            $teacherSubject = "[LSGH] Absence Slip Request Notification";
+            // $teacherBody = "Dear $teacherName,\n\nA $grade_level student at section $section who goes by $student_first_name $student_last_name was absent from $start_date to $end_date due to $reason.\n\n";
+            $teacherBody = "
+                    <html>
+                <body style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
+                    <div style='max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd;'>
+                        <h2 style='color: #28a745; text-align: center;'>Absence Slip Approved ✓</h2>
+                        
+                        <p>Dear $teacherName,</p>
+                        
+                        <p>We are pleased to inform you that the absence slip for <strong>$student_first_name</strong>, <strong>$student_last_name</strong> has been submitted.</p>
+                        
+                        <div style='background: #f8f9fa; padding: 15px; border-left: 4px solid #28a745; margin: 20px 0;'>
+                            <h3 style='margin-top: 0;'>Slip Details:</h3>
+                            <p><strong>First Name:</strong> $student_first_name</p>
+                            <p><strong>Last Name:</strong> $student_last_name</p>
+                            <p><strong>Grade Level:</strong> $grade_level</p>
+                            <p><strong>Section:</strong> $section</p>
+                            <p><strong>Absence Date:</strong> $start_date to $end_date</p>
+                            <p><strong>Reason:</strong> $reason</p>
+                            <p><strong>Date Processed:</strong> " . date('F j, Y \a\t g:i A') . "</p>
+                        </div>
+                        
+                        <p>Your child's absence has been officially recorded and approved. Please ensure that any missed assignments or quizzes are coordinated with the respective teachers.</p>
+                        
+                        <p>If you have any questions, please don't hesitate to contact us.</p>
+                        
+                        <p>Best regards,<br>
+                        <strong>Academic Office</strong><br>
+                        La Salle Green Hills</p>
+                        
+                        <hr style='margin: 30px 0;'>
+                        <p style='font-size: 12px; color: #666; text-align: center;'>
+                            This is an automated message. Please do not reply to this email.<br>
+                            For feedback: edtech@lsgh.edu.ph
+                        </p>
+                    </div>
+                </body>
+                </html>
+            ";
             // Add medical certificate info to teacher email if uploaded
             if (!empty($medical_cert_filename)) {
                 $teacherBody .= "Medical Certificate: Uploaded and available for review ($medical_cert_filename)\n\n";
             }
             
-            $teacherBody .= "Likewise, he/she kindly filled up the absence slip and requests to retake any missed quiz. THIS IS THE INITIAL TEST EMAIL MADE BY THE EDTECH OFFICE.\n\nPlease review this request at your earliest convenience.\n\nParent Contact: $parent_first_name $parent_last_name ($email)\n\nBest regards,\nAcademic Office";
             
             $headers = "MIME-Version: 1.0\r\n";
+            $headers .= "Content-Type: text/html; charset=UTF-8\r\n"; 
             $headers .= "From: kenanbanal3@gmail.com\r\n";
             $headers .= "Reply-To: kenanbanal3@gmail.com\r\n";
             

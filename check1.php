@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: makeup.php');
             exit();
         } else {
-            header('Location: exit.php');
+            header('Location: no.php');
             exit();
         }
     }
