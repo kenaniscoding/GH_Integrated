@@ -1021,8 +1021,7 @@ if ($selected_table === 'slips') {
 
                 if (isset($error_message)) {
                     echo "<div class='error-message'>$error_message</div>";
-                }
-                ?>
+                }?>
                 <?php if ($selected_table && in_array($selected_table, $tables)): ?>
                     <?php if ($selected_table === 'makeup_slips'): ?>
                         <!-- Special single-record view for makeup_slips -->
@@ -1413,9 +1412,7 @@ if ($selected_table === 'slips') {
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        // Your showLoading function here
-        let currentStep = 0;
+let currentStep = 0;
         const steps = ['step1', 'step2', 'step3', 'step4'];
 
         function showLoading(form, status) {
@@ -1493,8 +1490,6 @@ if ($selected_table === 'slips') {
             
             currentStep = 0;
         }
-
-        });
 
         // Handle form submission errors (optional)
         window.addEventListener('beforeunload', function() {
