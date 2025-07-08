@@ -229,7 +229,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         // Send email to the student/parent with the PDF attachment
-        $userSubject = "Makeup Slip Submission Confirmation";
+        $userSubject = "[LSGH] Makeup Slip Submission Confirmation";
         $userBody = "Dear $first_name $last_name,\n\nThank you for your submission. This is a confirmation that we have received your makeup slip request for $subject under $teacher.\n\nWe will contact you if further information is needed.\n\nPlease find attached a copy of your makeup quiz request form.\n\nBest regards,\nAcademic Office";
 
         // Prepare the email with attachment to the student
@@ -276,7 +276,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $teacherRow = $teacherEmailResult->fetch_assoc();
             $teacherEmail = $teacherRow['email'];
             
-            $teacherSubject = "Makeup Slip Request Notification";
+            $teacherSubject = "[LSGH] Makeup Slip Request Notification";
             $teacherBody = "Dear $teacher,\n\nA $grade student at section $section who goes by $first_name $last_name was absent from $subject on $start_date to $end_date due to $reason.\n\nLikewise, he/she kindly filled up the makeup slip and requests to retake the missed quiz. THIS IS THE INITIAL TEST EMAIL MADE BY THE EDTECH OFFICE.\n\nPlease review this request at your earliest convenience. The makeup slip request form is attached to this email.\n\nBest regards,\nAcademic Office";
             // Prepare teacher email with attachment
             $teacher_message = "--$boundary\r\n";
