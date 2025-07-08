@@ -93,6 +93,14 @@ if ($subjectsQuery && $subjectsQuery->num_rows > 0) {
 
 
         <button type="submit" id="submitBtn">Submit Makeup Slip</button>
+
+            <!-- Debug info (hidden in production) -->
+        <div style="margin-top: 20px; padding: 10px; border: 1px solid #ddd; background: #f9f9f9;">
+            <h3>Send us Feedback at:</h3>
+            <!-- <p>Subjects in database: <?php echo implode(", ", $subjectsInDB); ?></p>
+            <p>Grades in database: <?php echo implode(", ", $gradesInDB); ?></p> -->
+            <p style="font-family: Arial, sans-serif; color: #333;">edtech@lsgh.edu.ph</p>
+        </div>
     </form>
     
 </div>
