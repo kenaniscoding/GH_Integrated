@@ -12,3 +12,5 @@ check out the makeup and absence slip for reference
 ## FALL BACKS (the bad)
 - Sending emails and generating pdf takes around a minute
 - Requires an email that has an app password (see more [here](https://github.com/kenaniscoding/GH_MakeUpSlip))
+## Credits
+- Kenan Banal
